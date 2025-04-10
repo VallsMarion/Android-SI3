@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "etu.polytech.concertcare"
+    namespace = "edu.polytech.concertcare"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "etu.polytech.concertcare"
+        applicationId = "edu.polytech.concertcare"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

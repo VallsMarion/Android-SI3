@@ -1,4 +1,4 @@
-package etu.polytech.concertcare;
+package edu.polytech.concertcare;
 
 import android.content.Context;
 

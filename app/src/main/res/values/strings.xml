@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ConcertCare</string>
+    <string name="Screen1Fragment_label">Main Fragment</string>
+    <string name="MainFragment_content">this app automatically inflates by Android system because this Fragment is static</string>
+    <string name="content">awsome team</string>
+    <string name="index">index</string>
+    <string name="seekbarvalue">seekBarValue</string>
 </resources>
