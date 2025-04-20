@@ -48,8 +48,6 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
             }  break;
             case 2: fragment = new Screen3Fragment(); break;
             case 3: fragment = new Screen4Fragment(); break;
-            case 4: fragment = new Screen5Fragment(); break;
-            case 5: fragment = new Screen6Fragment(); break;
             default: fragment = new Screen1Fragment();
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

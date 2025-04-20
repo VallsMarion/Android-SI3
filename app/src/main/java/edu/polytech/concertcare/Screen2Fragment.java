@@ -1,79 +1,103 @@
 package edu.polytech.concertcare;
 
-import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
 
 public class Screen2Fragment extends Fragment {
 
-    private final static int NUM_FRAGMENT = 2;
-    private Notifiable notifiable;
-    private int seekBarValue;
+    private MapView map;
+    private RecyclerView staffPointsRecyclerView;
+    private StaffPointsAdapter staffPointsAdapter;
+    private List<StaffPoint> staffPointsList = new ArrayList<>();
 
-    public Screen2Fragment() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Configuration.getInstance().load(getActivity().getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()));
+
 
     }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (requireActivity() instanceof Notifiable) {
-            notifiable = (Notifiable) requireActivity();
-        } else {
-            throw new AssertionError("Classe " + requireActivity().getClass().getName() + " ne met pas en œuvre Notifiable.");
-        }
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_screen2, container, false);
-        ((TextView)view.findViewById(R.id.speed)).setText(""+seekBarValue);
-        SeekBar seekBar = view.findViewById(R.id.seekBar);
-        Button button = view.findViewById(R.id.go);
-        seekBar.setProgress(seekBarValue);
-        notifiable.onDataChange(NUM_FRAGMENT, seekBarValue);
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        View rootView = inflater.inflate(R.layout.fragment_screen2, container, false);
+
+        map = rootView.findViewById(R.id.map);
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setBuiltInZoomControls(true);
+
+        GeoPoint startPoint = new GeoPoint(43.60520, 7.00517);
+        IMapController mapController = map.getController();
+        mapController.setZoom(18.0);
+        mapController.setCenter(startPoint);
+
+        ArrayList<OverlayItem> items = new ArrayList<>();
+        OverlayItem home = new OverlayItem("you", "where you are", new GeoPoint(43.65020, 7.00517));
+        items.add(home);
+        items.add(new OverlayItem("rdv", "point de rdv", new GeoPoint(43.64950, 7.00517)));
+
+        Drawable marker = home.getMarker(0);
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(
+                getActivity().getApplicationContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int value, boolean b) {
-                seekBarValue = value;
-                notifiable.onDataChange(NUM_FRAGMENT, seekBarValue);
-                ((TextView)view.findViewById(R.id.speed)).setText(""+seekBarValue);
-               //TODO: do something
+            public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                return true;
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
+            public boolean onItemLongPress(int index, OverlayItem item) {
+                return false;
             }
         });
 
-        button.setOnClickListener(clic -> notifiable.onClick(NUM_FRAGMENT));
+        map.getOverlays().add(mOverlay);
+
+        staffPointsRecyclerView = rootView.findViewById(R.id.staffPointsList);
+        staffPointsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        staffPointsList.add(new StaffPoint("Stand information rue de la musique", "Ouvert de 8:00 à 13:00", 0.4));
+        staffPointsList.add(new StaffPoint("Stand accès PMR avenue jazz", "Ouvert de 8:00 à 13:00", 1.8));
+        staffPointsList.add(new StaffPoint("Stand information rue de la musique", "Ouvert de 8:00 à 13:00", 2.3));
+
+        staffPointsAdapter = new StaffPointsAdapter(staffPointsList);
+        staffPointsRecyclerView.setAdapter(staffPointsAdapter);
 
 
-        return view;
+        return rootView;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        map.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        map.onResume();
+    }
 }
