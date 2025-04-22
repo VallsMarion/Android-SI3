@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -53,4 +55,6 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-core:2.10.3")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.10.3")
     implementation("com.google.android.gms:play-services-maps:17.0.0")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
 }
