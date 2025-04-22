@@ -3,18 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_background_gradient"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/backgroundImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/fond"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/Title"
@@ -34,12 +24,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:textColor="@color/white"
-        android:text="L'instant de vos concert"
+        android:text="L'assistant de vos concerts"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title"/>
 
     <!-- mettre l'annimation-->
+    <include layout="@layout/activity_main_animation"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

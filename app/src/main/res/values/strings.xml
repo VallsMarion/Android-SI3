@@ -18,5 +18,11 @@
         <item>Sombre</item>
     </string-array>
 
+    <string-array name="menu">
+        <item>Accueil</item>
+        <item>Localiser</item>
+        <item>Assistance</item>
+        <item>Paramètres</item>
+    </string-array>
 
 </resources>

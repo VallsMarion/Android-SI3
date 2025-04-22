@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
 
-public class Screen2Fragment extends Fragment {
+public class StaffMapFragment extends Fragment {
 
     private MapView map;
     private RecyclerView staffPointsRecyclerView;
@@ -43,7 +43,7 @@ public class Screen2Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_screen2, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_staffmap, container, false);
 
         map = rootView.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);

@@ -2,7 +2,6 @@ package edu.polytech.concertcare;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -41,7 +40,7 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
         switch (index){
             case 0: fragment = new Screen1Fragment(); break;
             case 1: {
-                fragment = new Screen2Fragment();
+                fragment = new StaffMapFragment();
                 Bundle args = new Bundle();
                 args.putInt(getString(R.string.seekbarvalue), seekBarValue);
                 fragment.setArguments(args);

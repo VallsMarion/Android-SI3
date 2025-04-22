@@ -15,4 +15,6 @@
     <color name="green">#008000</color>
     <color name="violet">#EE82EE</color>
     <color name="purple">#C54DFB</color>
+    <color name="loading_bar_start_color">#5FB2F2</color>  <!-- Bleu clair -->
+    <color name="loading_bar_end_color">#0D47A1</color>
 </resources>
