@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class ScreenRequestFragment extends Fragment {
 
@@ -27,12 +28,19 @@ public class ScreenRequestFragment extends Fragment {
         needAssistanceButton = view.findViewById(R.id.needAssistanceButton);
 
         foundItemButton.setOnClickListener(v -> {
-            //TODO
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_main, new FoundItemFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         lostItemButton.setOnClickListener(v -> {
-            //TODO
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_main, new LostItemFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
+
 
         needAssistanceButton.setOnClickListener(v -> {
             //TODO
