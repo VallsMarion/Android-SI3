@@ -1,7 +1,4 @@
 package edu.polytech.concertcare;
-
-import java.io.Serializable;
-
 public class Concert {
     public String title;
     public String date;
