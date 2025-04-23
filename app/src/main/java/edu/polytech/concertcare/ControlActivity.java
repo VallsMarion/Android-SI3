@@ -30,6 +30,7 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_menu, menu);
         transaction.commit();
+        onMenuChange(0);
     }
 
 
@@ -38,7 +39,7 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
     public void onMenuChange(int index) {
         Fragment fragment = null;
         switch (index){
-            case 0: fragment = new Screen1Fragment(); break;
+            case 0: fragment = new HomeFragment(); break;
             case 1: {
                 fragment = new StaffMapFragment();
                 Bundle args = new Bundle();
@@ -47,7 +48,7 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
             }  break;
             case 2: fragment = new Screen3Fragment(); break;
             case 3: fragment = new Screen4Fragment(); break;
-            default: fragment = new Screen1Fragment();
+            default: fragment = new HomeFragment();
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_main, fragment);

@@ -17,4 +17,6 @@
     <color name="purple">#C54DFB</color>
     <color name="loading_bar_start_color">#5FB2F2</color>  <!-- Bleu clair -->
     <color name="loading_bar_end_color">#0D47A1</color>
+    <color name="background_grey">#DCDBDB</color>
+    <color name="grey">#666666</color>
 </resources>
