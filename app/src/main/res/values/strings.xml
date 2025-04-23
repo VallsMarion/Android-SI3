@@ -14,6 +14,8 @@
     <string name="tab_upcoming">À venir</string>
     <string name="tab_past">Passés</string>
     <string name="tab_cancelled">Annulés</string>
+    <string name="title">demo title</string>
+    <string name="message">demo message</string>
 
     <string-array name="languages">
         <item>Système (Français)</item>

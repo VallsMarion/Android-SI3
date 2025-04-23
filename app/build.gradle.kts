@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.messaging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

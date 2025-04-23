@@ -1,9 +1,13 @@
 package edu.polytech.concertcare;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -12,6 +16,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.FirebaseApp;
 
@@ -19,11 +24,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 101;
     private View[] loadingBars;
     private Random random = new Random();
     private boolean isRandomMode = true;
+
+    private final static String TAG = "concertcare";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,23 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }, 4000);
+
+        //check permissions to receive notifications
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                || Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_NOTIFICATION_PERMISSION);
+        }
+
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener( task -> {
+            if(!task.isSuccessful()){
+                Log.d(TAG,"no token received ");
+            }
+            else {
+                Log.d(TAG,"token = "+task.getResult());
+            }
+        });
 
     }
         private void startLoadingAnimation() {
@@ -90,5 +117,7 @@ public class MainActivity extends AppCompatActivity {
     public static int getRandomIntBetween(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
+
+
 
 }
