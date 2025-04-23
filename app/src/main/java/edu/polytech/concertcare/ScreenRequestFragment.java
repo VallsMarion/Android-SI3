@@ -43,7 +43,10 @@ public class ScreenRequestFragment extends Fragment {
 
 
         needAssistanceButton.setOnClickListener(v -> {
-            //TODO
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_main, new AssistanceRequestFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         return view;

@@ -13,63 +13,51 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Signaler un objet perdu"
+            android:text="Demande d’assistance"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="8dp"
+            android:textColor="#000000"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="À quel concert l'avez-vous perdu ? *"
+            android:text="Vous avez besoin d’assistance ?\nRemplissez ce formulaire"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="À quel concert correspond la demande?"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
-            android:textColor="#000000" />
+            android:textColor="#000000"/>
 
         <Spinner
             android:id="@+id/concertSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/border"
-            android:padding="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quel est le type de l'objet ? *"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            android:textColor="#000000" />
-
-        <Spinner
-            android:id="@+id/itemTypeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/border"
-            android:padding="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Décrivez l'objet *"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            android:textColor="#000000" />
-
-        <EditText
-            android:id="@+id/itemDescription"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:hint="Décrivez l'objet"
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:layout_marginBottom="16dp"
             android:background="@drawable/border"
             android:padding="8dp"
-            android:textColor="#000000" />
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quel est le type de demande ? *"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#000000"/>
+
+        <Spinner
+            android:id="@+id/requestTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,7 +65,7 @@
             android:text="Numéro de téléphone *"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
-            android:textColor="#000000" />
+            android:textColor="#000000"/>
 
         <EditText
             android:id="@+id/phoneNumber"
@@ -85,27 +73,30 @@
             android:layout_height="wrap_content"
             android:hint="06 33 77 88 99"
             android:inputType="phone"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/border"
             android:padding="8dp"
-            android:textColor="#000000" />
+            android:textColor="#000000"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Photo de l'objet"
+            android:text="Remarques"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
-            android:textColor="#000000" />
+            android:textColor="#000000"/>
 
-        <Button
-            android:id="@+id/selectImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choisir ..."
-            android:backgroundTint="@color/black"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="24dp" />
+        <EditText
+            android:id="@+id/remarks"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint=""
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/border"
+            android:padding="8dp"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/sendButton"
@@ -113,6 +104,6 @@
             android:layout_height="wrap_content"
             android:text="Send"
             android:backgroundTint="@color/black"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"/>
     </LinearLayout>
 </ScrollView>
