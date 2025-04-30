@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.concerts;
 
 /**
  * Interface pour écouter les évènements sur le nom du diplome

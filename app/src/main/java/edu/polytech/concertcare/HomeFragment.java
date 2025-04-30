@@ -23,7 +23,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements Clickable {
+import edu.polytech.concertcare.concerts.Clickable;
+import edu.polytech.concertcare.concerts.Concert;
+import edu.polytech.concertcare.concerts.ConcertAdapter;
+import edu.polytech.concertcare.concerts.HttpAsyncGet;
+import edu.polytech.concertcare.concerts.PostExecuteActivity;
+
+public class HomeFragment extends Fragment implements Clickable, PostExecuteActivity<Concert> {
     private List<Concert> concertList = new ArrayList<>();
     private ConcertAdapter concertAdapter;
     private ListView listView;
@@ -49,32 +55,6 @@ public class HomeFragment extends Fragment implements Clickable {
         }
     }
 
-    private void loadConcertsFromFirebase() {
-        FirebaseDatabase db = FirebaseDatabase.getInstance("https://concertcare-16a66-default-rtdb.europe-west1.firebasedatabase.app");
-        DatabaseReference dbRef = db.getReference("concerts");
-
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                concertList.clear();
-                for (DataSnapshot concertSnap : snapshot.getChildren()) {
-                    Concert concert = concertSnap.getValue(Concert.class);
-                    concertList.add(concert);
-                }
-                concertAdapter.notifyDataSetChanged();
-                Log.d("Firebase", "Concerts loaded: " + concertList.size());
-                Toast.makeText(getContext(), "Concerts: " + concertList.size(), Toast.LENGTH_SHORT).show();
-                Log.d("Firebase", "Snapshot exists: " + snapshot.exists());
-                Log.d("Firebase", "Children count: " + snapshot.getChildrenCount());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error loading concerts", error.toException());
-            }
-        });
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -82,23 +62,37 @@ public class HomeFragment extends Fragment implements Clickable {
         listView = view.findViewById(R.id.listView);
         concertAdapter = new ConcertAdapter(concertList, getContext(),this);
         listView.setAdapter(concertAdapter);
-
-        loadConcertsFromFirebase();
-
-
+        String url = "https://raw.githubusercontent.com/JanaSaad0/ConcertCareData/main/concert.json";
+        //todo: try to change context from MainActivity.this in getApplicationContext()
+        new HttpAsyncGet<>(url, Concert.class, this, null );
         return view;
     }
 
 
     @Override
     public void onClicItem(int itemIndex) {
-
+        Toast.makeText(getContext(), "Clicked: " + concertList.get(itemIndex).title, Toast.LENGTH_SHORT).show();
     }
 
     @NonNull
     @Override
     public CreationExtras getDefaultViewModelCreationExtras() {
         return super.getDefaultViewModelCreationExtras();
+    }
+
+    @Override
+    public void onPostExecute(List<Concert> itemList) {
+        concertList.clear();
+        concertList.addAll(itemList);
+
+        concertAdapter = new ConcertAdapter(concertList, requireContext(), this);
+        listView.setAdapter(concertAdapter);
+        concertAdapter.notifyDataSetChanged(); // this updates the list on screen
+    }
+
+    @Override
+    public void runOnUiThread(Runnable runnable) {
+        requireActivity().runOnUiThread(runnable);
     }
 
 }

@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.concerts;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.squareup.picasso.Picasso;
 import java.util.List;
+
+import edu.polytech.concertcare.R;
 
 public class ConcertAdapter extends BaseAdapter {
     private List<Concert> concertList;
@@ -53,8 +55,6 @@ public class ConcertAdapter extends BaseAdapter {
         Concert concert = concertList.get(position);
         title.setText(concert.title);
         details.setText("Le " + concert.date + "\n" + concert.location);
-        moreInfo.setText(concert.moreInfoText);
-        requests.setText(concert.requestButtonText);
         Picasso.get().load(concert.imageUrl).into(image);
 
         layoutItem.setOnClickListener(v -> callBackActivity.onClicItem(position));

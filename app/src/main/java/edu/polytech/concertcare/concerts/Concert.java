@@ -1,11 +1,10 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.concerts;
 public class Concert {
     public String title;
     public String date;
     public String location;
     public String imageUrl;
-    public String moreInfoText;
-    public String requestButtonText;
+
 
     public Concert() {}
 
@@ -15,7 +14,6 @@ public class Concert {
         this.date = date;
         this.location = location;
         this.imageUrl = imageUrl;
-        this.moreInfoText = moreInfoText;
-        this.requestButtonText = requestButtonText;
+
     }
 }
