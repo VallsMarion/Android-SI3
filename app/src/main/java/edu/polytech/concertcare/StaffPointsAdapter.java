@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import edu.polytech.concertcare.concerts.StaffPoint;
+
 public class StaffPointsAdapter extends RecyclerView.Adapter<StaffPointsAdapter.StaffPointViewHolder> {
 
     private List<StaffPoint> staffPointsList;
@@ -44,8 +46,6 @@ public class StaffPointsAdapter extends RecyclerView.Adapter<StaffPointsAdapter.
     public void onBindViewHolder(StaffPointViewHolder holder, int position) {
         StaffPoint staffPoint = staffPointsList.get(position);
         holder.staffPointName.setText(staffPoint.getName());
-        holder.staffPointDetails.setText(staffPoint.getDetails());
-        holder.staffPointDistance.setText(staffPoint.getDistance() + " km");
         holder.staffPointIcon.setImageResource(R.drawable.ic_map_marker);
     }
 
