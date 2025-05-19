@@ -2,8 +2,6 @@ package edu.polytech.concertcare;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -16,19 +14,15 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import org.osmdroid.api.IMapController;
+
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
-import org.osmdroid.views.overlay.OverlayItem;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +31,8 @@ import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import android.Manifest;
+
+import edu.polytech.concertcare.concerts.StaffPoint;
 
 
 public class StaffMapFragment extends Fragment {
@@ -117,10 +113,6 @@ public class StaffMapFragment extends Fragment {
 
         staffPointsRecyclerView = rootView.findViewById(R.id.staffPointsList);
         staffPointsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        staffPointsList.add(new StaffPoint("Stand information rue de la musique", "Ouvert de 8:00 à 13:00", 0.4));
-        staffPointsList.add(new StaffPoint("Stand accès PMR avenue jazz", "Ouvert de 8:00 à 13:00", 1.8));
-        staffPointsList.add(new StaffPoint("Stand information rue de la musique", "Ouvert de 8:00 à 13:00", 2.3));
 
         staffPointsAdapter = new StaffPointsAdapter(staffPointsList);
         staffPointsRecyclerView.setAdapter(staffPointsAdapter);
