@@ -3,106 +3,104 @@ package edu.polytech.concertcare;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.media.AudioAttributes;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
+import android.os.IBinder;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
+public class NotificationService extends Service {
 
-import java.util.List;
-
-public class NotificationService extends FirebaseMessagingService {
-    private final static String TAG = "frallo ";
-    public static final String CHANNEL_1_ID = "channel LOW";
-    public static final String CHANNEL_2_ID = "channel DEFAULT";
-    public static final String CHANNEL_3_ID = "channel HIGH";
+    private static final String TAG = "NotificationService";
+    private static final String CHANNEL_ID = "channel_high_priority";
     private Uri uriSound;
+
+    public class LocalBinder extends Binder {
+        public NotificationService getService() {
+            return NotificationService.this;
+        }
+    }
+
+    private final IBinder binder = new LocalBinder();
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binder;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d( TAG, "Service created" );
-        // create NotificationChannel, only pour API 26+
+        createNotificationChannel();
+    }
+
+    private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            //remove existing channels
-            notificationManager.deleteNotificationChannel(CHANNEL_1_ID);
-            notificationManager.deleteNotificationChannel(CHANNEL_2_ID);
-            notificationManager.deleteNotificationChannel(CHANNEL_3_ID);
-            //create channels
-            NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "Channel 1",  NotificationManager.IMPORTANCE_LOW);
-            NotificationChannel channel2 = new NotificationChannel(CHANNEL_2_ID, "Channel 2",  NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationChannel channel3 = new NotificationChannel(CHANNEL_3_ID, "Channel 3",  NotificationManager.IMPORTANCE_HIGH);
-            //add descripotions
-            channel1.setDescription("This Channel has low priority");
-            channel2.setDescription("This Channel has default priority");
-            channel3.setDescription("This Channel has high priority");
-            //add sound effect
-            uriSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"+ getApplicationContext().getPackageName() + "/" + R.raw.mj);
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                    .build();
-            channel3.setSound(uriSound, audioAttributes); // apply sound here
-            // register the channels
-            notificationManager.createNotificationChannels(List.of(channel1,channel2,channel3));
-            Log.d( TAG, "channels created " );
-            Log.d(TAG, "uriSound = "+uriSound);
-        }
-        else{
-            Log.d( TAG, "channels NOT created: only pour API 26+" );
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.deleteNotificationChannel(CHANNEL_ID);
+
+                NotificationChannel channel = new NotificationChannel(
+                        CHANNEL_ID,
+                        "Canal principal",
+                        NotificationManager.IMPORTANCE_HIGH
+                );
+                channel.setDescription("Canal utilisé pour les notifications importantes");
+
+                uriSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                        getPackageName() + "/" + R.raw.mj);
+
+                AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .build();
+
+                channel.setSound(uriSound, audioAttributes);
+                manager.createNotificationChannel(channel);
+            }
         }
     }
 
-    @Override
-    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        super.onMessageReceived(remoteMessage);
-        Log.d(TAG, "message received");
-        if ( remoteMessage.getNotification() != null ) {
-            //callback on clic on the notification  --> MainActivity
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(getString(R.string.title), remoteMessage.getNotification().getTitle());
-            intent.putExtra(getString(R.string.message), remoteMessage.getNotification().getBody());
-            PendingIntent pendingIntent = PendingIntent.getActivity(
-                    getApplicationContext(),
-                    0,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-            // send notification
-            send( pendingIntent, remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-            Log.d(TAG, "title: " + remoteMessage.getNotification().getTitle());
+    public void sendSuccessNotificationWithImage() {
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.w(TAG, "Permission not granted");
+            return;
         }
-        else {
-            Log.d(TAG, "message NULL");
-        }
-    }
 
-    private void send(PendingIntent pendingIntent, String title, String message){
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(),
-                android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_3_ID)
-                    .setSmallIcon(R.drawable.ic_notifications)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setContentIntent(pendingIntent) // <- très important !
-                    .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setSound(uriSound);
-            notificationManager.notify(1, builder.build());
-        } else {  // not have the permission
-            Log.d(TAG, "I don't have the permission :/");
-        }
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle()
+                .bigPicture(BitmapFactory.decodeResource(getResources(), R.drawable.success))
+                .bigLargeIcon(null)
+                .setSummaryText("Votre demande a bien été enregistrée");
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notifications)
+                .setContentTitle("Demande envoyée")
+                .setContentText("Votre demande a bien été enregistrée")
+                .setStyle(bigPictureStyle)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.success)) // 👈 image visible en petit
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSound(uriSound);
+
+
+        NotificationManagerCompat.from(this).notify(1001, builder.build());
     }
 }

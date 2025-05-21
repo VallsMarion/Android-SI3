@@ -1,6 +1,11 @@
 package edu.polytech.concertcare;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +27,29 @@ public class AssistanceRequestFragment extends Fragment {
     public AssistanceRequestFragment() {
     }
 
+    private NotificationService notificationService;
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            NotificationService.LocalBinder binder = (NotificationService.LocalBinder) service;
+            notificationService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            notificationService = null;
+        }
+    };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(requireContext(), NotificationService.class);
+        requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -35,7 +63,10 @@ public class AssistanceRequestFragment extends Fragment {
         sendButton = view.findViewById(R.id.sendButton);
 
         sendButton.setOnClickListener(v -> {
-            //todo
+            if (notificationService != null) {
+                notificationService.sendSuccessNotificationWithImage();
+            }
+
         });
 
         return view;

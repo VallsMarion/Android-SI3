@@ -5,11 +5,15 @@ import static android.content.ContentValues.TAG;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -36,6 +40,29 @@ public class FoundItemFragment extends Fragment {
 
     public FoundItemFragment() {
     }
+
+    private NotificationService notificationService;
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            NotificationService.LocalBinder binder = (NotificationService.LocalBinder) service;
+            notificationService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            notificationService = null;
+        }
+    };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(requireContext(), NotificationService.class);
+        requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +101,9 @@ public class FoundItemFragment extends Fragment {
             }
         });
         sendButton.setOnClickListener(v -> {
-            //todo
+            if (notificationService != null) {
+                notificationService.sendSuccessNotificationWithImage();
+            }
         });
 
         return view;
