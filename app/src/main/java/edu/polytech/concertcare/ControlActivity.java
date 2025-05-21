@@ -9,14 +9,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.List;
 
-public class ControlActivity extends AppCompatActivity implements Menuable, Notifiable {
+import edu.polytech.concertcare.concerts.Concert;
+import edu.polytech.concertcare.concerts.ConcertList;
+import edu.polytech.concertcare.concerts.HttpAsyncGet;
+import edu.polytech.concertcare.concerts.PostExecuteActivity;
+
+
+public class ControlActivity extends AppCompatActivity implements Menuable, Notifiable, PostExecuteActivity<Concert> {
     private int seekBarValue = 30;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
+
+        String url = "https://raw.githubusercontent.com/JanaSaad0/ConcertCareData/main/concert.json";
+        new HttpAsyncGet<>(url, Concert.class, this, null );
 
         int menuNumber = 1;
 
@@ -32,7 +42,6 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_menu, menu);
         transaction.commit();
-        onMenuChange(0);
     }
 
 
@@ -89,4 +98,9 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
         }
     }
 
+    @Override
+    public void onPostExecute(List<Concert> itemList) {
+        ConcertList.addAllConcerts(itemList);
+        onMenuChange(0); // TODO ajouter des constantes pour les index pour mieux comprendre le switch
+    }
 }
