@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_NOTIFICATION_PERMISSION = 101;
@@ -65,15 +63,6 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS},
                     REQUEST_NOTIFICATION_PERMISSION);
         }
-
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener( task -> {
-            if(!task.isSuccessful()){
-                Log.d(TAG,"no token received ");
-            }
-            else {
-                Log.d(TAG,"token = "+task.getResult());
-            }
-        });
 
     }
         private void startLoadingAnimation() {
