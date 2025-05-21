@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ConcertCare</string>
+    <string name="sous_titre">L\'assistant de vos concerts</string>
     <string name="Screen1Fragment_label">Main Fragment</string>
     <string name="MainFragment_content">this app automatically inflates by Android system because this Fragment is static</string>
     <string name="content">awsome team</string>
@@ -35,5 +36,54 @@
         <item>Assistance</item>
         <item>Paramètres</item>
     </string-array>
+
+    <!-- page home -->
+    <string name="demandes">Mes demandes</string>
+    <string name="info">Plus d\'infos</string>
+
+    <!-- request page -->
+    <string name="assistance">Demande d’assistance</string>
+    <string name="text_assis">Vous avez besoin d’assistance ?\nRemplissez ce formulaire</string>
+    <string name="q1">À quel concert correspond la demande?</string>
+    <string name="q2">Quel est le type de demande ? *</string>
+    <string name="num_tel">Numéro de téléphone *</string>
+    <string name="Remarques">Remarques</string>
+    <string name="Send">Send</string>
+
+    <!-- found page -->
+    <string name="found">Signaler un objet trouvé</string>
+    <string name="text_found">À quel concert l\'avez-vous trouvé ? *</string>
+    <string name="prendre_photo">Prenez une photo</string>
+
+    <string name="sujet_dem">Quel est le sujet de votre demande ?</string>
+    <string name="sujet_dem1">J\'ai trouvé un objet</string>
+    <string name="sujet_dem2">J\'ai perdu un objet</string>
+    <string name="sujet_dem3">J\'ai besoin d\'assistance</string>
+
+    <!-- lost page -->
+    <string name="lost">Signaler un objet perdu</string>
+    <string name="text_lost">À quel concert l\'avez-vous perdu ? *</string>
+
+    <string name="type">Quel est le type de l\'objet ? *</string>
+    <string name="description">Décrivez l\'objet *</string>
+    <string name="label_description">Décrivez l\'objet</string>
+    <string name="choisir_photo">Photo de l\'objet</string>
+    <string name="label_photo">Choisir ...</string>
+
+    <!-- Parametre -->
+    <string name="parametre">Paramètres</string>
+    <string name="langue">Langue</string>
+    <string name="theme">Thème</string>
+    <string name="deco">Se déconnecter</string>
+    <string name="suppr">Supprimer le compte</string>
+
+    <!-- Localiser -->
+    <string name="localiser">Localiser</string>
+    <string name="staff">Trouver un point de staff à proximité</string>
+    <string name="list_staff">Liste des points de staff</string>
+
+    <!-- item demande -->
+    <string name="demande_titre">Titre de la demande</string>
+    <string name="demande_descr">Description de la demande</string>
 
 </resources>

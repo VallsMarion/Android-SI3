@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Signaler un objet perdu"
+            android:text="@string/lost"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#000000"
@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="À quel concert l'avez-vous perdu ? *"
+            android:text="@string/text_lost"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000" />
@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quel est le type de l'objet ? *"
+            android:text="@string/type"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000" />
@@ -54,7 +54,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Décrivez l'objet *"
+            android:text="@string/description"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000" />
@@ -63,7 +63,7 @@
             android:id="@+id/itemDescription"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:hint="Décrivez l'objet"
+            android:hint="@string/label_description"
             android:inputType="textMultiLine"
             android:gravity="top"
             android:layout_marginBottom="16dp"
@@ -74,7 +74,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Numéro de téléphone *"
+            android:text="@string/num_tel"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000" />
@@ -93,7 +93,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Photo de l'objet"
+            android:text="@string/choisir_photo"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000" />
@@ -102,7 +102,7 @@
             android:id="@+id/selectImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choisir ..."
+            android:text="@string/label_photo"
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="24dp" />
@@ -111,7 +111,7 @@
             android:id="@+id/sendButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="@string/Send"
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF" />
     </LinearLayout>

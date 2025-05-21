@@ -1,9 +1,13 @@
 package edu.polytech.concertcare;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +29,30 @@ public class LostItemFragment extends Fragment {
     public LostItemFragment() {
     }
 
+    private NotificationService notificationService;
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            NotificationService.LocalBinder binder = (NotificationService.LocalBinder) service;
+            notificationService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            notificationService = null;
+        }
+    };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(requireContext(), NotificationService.class);
+        requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +68,10 @@ public class LostItemFragment extends Fragment {
         selectImageButton.setOnClickListener(v -> openImagePicker());
 
         sendButton.setOnClickListener(v -> {
-            //todo
+            if (notificationService != null) {
+                notificationService.sendSuccessNotificationWithImage();
+            }
+
         });
 
         return view;

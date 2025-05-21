@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mes demandes"
+            android:text="@string/demandes"
             android:textSize="40dp"
             android:textStyle="bold"
             android:textColor="#000000"
@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quel est le sujet de votre demande ?"
+            android:text="@string/sujet_dem"
             android:textSize="20sp"
             android:textColor="#000000"
             android:textAlignment="center"
@@ -41,7 +41,7 @@
             android:id="@+id/foundItemButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="J'ai trouvé un objet"
+            android:text="@string/sujet_dem1"
             android:backgroundTint="@color/black"
             android:layout_marginBottom="20dp"/>
 
@@ -49,7 +49,7 @@
             android:id="@+id/lostItemButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="J'ai perdu un objet"
+            android:text="@string/sujet_dem2"
             android:backgroundTint="@color/black"
             android:layout_marginBottom="20dp"/>
 
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black"
-            android:text="J'ai besoin d'assistance"/>
+            android:text="@string/sujet_dem3"/>
     </LinearLayout>
 
 </FrameLayout>
