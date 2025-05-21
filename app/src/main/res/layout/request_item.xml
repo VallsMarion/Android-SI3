@@ -24,7 +24,7 @@
             android:id="@+id/requestTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Titre de la demande"
+            android:text="@string/demande_titre"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#000000"/>
@@ -33,7 +33,7 @@
             android:id="@+id/requestDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description de la demande"
+            android:text="@string/demande_descr"
             android:textSize="14sp"
             android:textColor="#757575"/>
     </LinearLayout>

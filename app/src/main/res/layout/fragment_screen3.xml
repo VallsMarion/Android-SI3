@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mes demandes"
+            android:text="@string/demandes"
             android:textSize="40dp"
             android:textStyle="bold"
             android:textColor="#000000"

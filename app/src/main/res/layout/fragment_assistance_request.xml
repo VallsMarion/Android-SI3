@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Demande d’assistance"
+            android:text="@string/assistance"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"
@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vous avez besoin d’assistance ?\nRemplissez ce formulaire"
+            android:text="@string/text_assis"
             android:textSize="16sp"
             android:layout_marginBottom="24dp"
             android:textColor="#666666" />
@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="À quel concert correspond la demande?"
+            android:text="@string/q1"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"/>
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quel est le type de demande ? *"
+            android:text="@string/q2"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"/>
@@ -62,7 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Numéro de téléphone *"
+            android:text="@string/num_tel"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"/>
@@ -81,7 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remarques"
+            android:text="@string/Remarques"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000"/>
@@ -102,7 +102,7 @@
             android:id="@+id/sendButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="@string/Send"
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF"/>
     </LinearLayout>

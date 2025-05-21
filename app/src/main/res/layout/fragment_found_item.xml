@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Signaler un objet trouvé"
+            android:text="@string/found"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="24dp"
@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="À quel concert l'avez-vous trouvé ? *"
+            android:text="@string/text_found"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000" />
@@ -75,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Numéro de téléphone *"
+            android:text="@string/num_tel"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#000000" />
@@ -107,7 +107,7 @@
                 android:id="@+id/selectImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choisir ..."
+                android:text="@string/prendre_photo"
                 android:backgroundTint="@color/black"
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="24dp"
@@ -132,7 +132,7 @@
             android:id="@+id/sendButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="@string/Send"
             android:backgroundTint="@color/black"
             android:textColor="#FFFFFF" />
 
