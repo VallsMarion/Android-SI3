@@ -1,32 +1,35 @@
 package edu.polytech.concertcare.concerts;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+/**
+ * Singleton class to manage a list of concerts. Not thread-safe.
+ * All methods are static so we can access them without creating an instance.
+ */
 public class ConcertList {
-    private List<Concert> concerts;
+    private static List<Concert> concerts;
+
+    private static final ConcertList instance = new ConcertList();
 
     private ConcertList() {
         concerts = new ArrayList<>();
     }
 
-    private static class Holder {
-        private static final ConcertList INSTANCE = new ConcertList();
-    }
-
     public static ConcertList getInstance() {
-        return Holder.INSTANCE;
+        return instance;
     }
 
-    public List<Concert> getConcerts() {
+    public static List<Concert> getConcerts() {
         return concerts;
     }
 
-    public void addConcert(Concert concert) {
+    public static void addConcert(Concert concert) {
         concerts.add(concert);
     }
 
-    public void addAllConcerts(List<Concert> concerts) {
-        this.concerts.addAll(concerts);
+    public static void addAllConcerts(List<Concert> concerts) {
+        ConcertList.concerts.addAll(concerts);
     }
 }

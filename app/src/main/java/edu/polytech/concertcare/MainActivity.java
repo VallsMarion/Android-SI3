@@ -15,6 +15,8 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -63,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS},
                     REQUEST_NOTIFICATION_PERMISSION);
         }
+
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener( task -> {
+            if(!task.isSuccessful()){
+                Log.d(TAG,"no token received ");
+            }
+            else {
+                Log.d(TAG,"token = "+task.getResult());
+            }
+        });
 
     }
         private void startLoadingAnimation() {
