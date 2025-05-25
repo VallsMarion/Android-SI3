@@ -14,21 +14,12 @@ import android.widget.ListView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.polytech.concertcare.concerts.Clickable;
 import edu.polytech.concertcare.concerts.Concert;
 import edu.polytech.concertcare.concerts.ConcertAdapter;
 import edu.polytech.concertcare.concerts.ConcertList;
-import edu.polytech.concertcare.concerts.HttpAsyncGet;
-import edu.polytech.concertcare.concerts.PostExecuteActivity;
 
 public class HomeFragment extends Fragment implements Clickable {
     private List<Concert> concertList;

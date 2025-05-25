@@ -1,12 +1,10 @@
 package edu.polytech.concertcare;
 
-import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 

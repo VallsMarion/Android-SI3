@@ -1,7 +1,6 @@
 package edu.polytech.concertcare.concerts;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
