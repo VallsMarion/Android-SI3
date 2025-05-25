@@ -1,9 +1,14 @@
 package edu.polytech.concertcare;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.List;
 
 import edu.polytech.concertcare.concerts.Concert;
+import edu.polytech.concertcare.concerts.ConcertItemFragment;
 import edu.polytech.concertcare.concerts.ConcertList;
 import edu.polytech.concertcare.concerts.HttpAsyncGet;
 import edu.polytech.concertcare.concerts.PostExecuteActivity;
@@ -76,9 +82,25 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
 
     @Override
     public void onDataChange(int numFragment, Object data) {
-        switch(numFragment){
-            case 2:  seekBarValue = (Integer)data; break;
+        if (numFragment == 2) { // concert click
+            int index = (Integer) data;
+
+            Fragment fragment = new ConcertItemFragment();
+            Bundle args = new Bundle();
+            args.putInt("concert_index", index); // just send the index
+
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_main, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 
     @Override

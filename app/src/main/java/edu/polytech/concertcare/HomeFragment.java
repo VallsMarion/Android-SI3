@@ -34,7 +34,6 @@ public class HomeFragment extends Fragment implements Clickable {
     private List<Concert> concertList;
     private ConcertAdapter concertAdapter;
     private ListView listView;
-    private final static int NUM_FRAGMENT = 1;
     private Notifiable notifiable;
 
     public HomeFragment() {
@@ -62,7 +61,7 @@ public class HomeFragment extends Fragment implements Clickable {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         listView = view.findViewById(R.id.listView);
-        concertAdapter = new ConcertAdapter(concertList, getContext(),this);
+        concertAdapter = new ConcertAdapter(concertList, notifiable);
         listView.setAdapter(concertAdapter);
 
         return view;
