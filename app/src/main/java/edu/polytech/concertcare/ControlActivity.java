@@ -94,6 +94,24 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
                     .addToBackStack(null)
                     .commit();
         }
+        /*
+        ** to show staff point details when you click on a concert
+        else if (numFragment == 1000) {
+            int concertIndex = (Integer) data;
+
+            Bundle args = new Bundle();
+            args.putInt("concert_index", concertIndex);
+
+            Fragment fragment = new StaffMapFragment();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_main, fragment)
+                    .addToBackStack(null)
+                    .commit();
+
+            onMenuChange(1);
+        }*/
     }
 
     @Override
