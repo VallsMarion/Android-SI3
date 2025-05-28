@@ -14,27 +14,17 @@ import android.widget.ListView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.polytech.concertcare.concerts.Clickable;
 import edu.polytech.concertcare.concerts.Concert;
 import edu.polytech.concertcare.concerts.ConcertAdapter;
 import edu.polytech.concertcare.concerts.ConcertList;
-import edu.polytech.concertcare.concerts.HttpAsyncGet;
-import edu.polytech.concertcare.concerts.PostExecuteActivity;
 
 public class HomeFragment extends Fragment implements Clickable {
     private List<Concert> concertList;
     private ConcertAdapter concertAdapter;
     private ListView listView;
-    private final static int NUM_FRAGMENT = 1;
     private Notifiable notifiable;
 
     public HomeFragment() {
@@ -62,7 +52,7 @@ public class HomeFragment extends Fragment implements Clickable {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         listView = view.findViewById(R.id.listView);
-        concertAdapter = new ConcertAdapter(concertList, getContext(),this);
+        concertAdapter = new ConcertAdapter(concertList, notifiable);
         listView.setAdapter(concertAdapter);
 
         return view;

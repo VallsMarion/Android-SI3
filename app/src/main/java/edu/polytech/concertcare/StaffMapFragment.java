@@ -53,6 +53,13 @@ public class StaffMapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //this is if wee keep satff point details when you click on a concert
+        /*if (getArguments() != null) {
+            int concertIndex = getArguments().getInt("concert_index", -1);
+            if (concertIndex != -1 && concertIndex < ConcertList.getConcerts().size()) {
+                staffPointsList = ConcertList.getConcerts().get(concertIndex).staffPoints;
+            }
+        }*/
 
         requestLocationPermissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),

@@ -1,6 +1,8 @@
 package edu.polytech.concertcare.concerts;
 
-import android.content.Context;
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +15,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
+import edu.polytech.concertcare.Notifiable;
 import edu.polytech.concertcare.R;
 
 public class ConcertAdapter extends BaseAdapter {
     private List<Concert> concertList;
-    private Clickable callBackActivity;
     private LayoutInflater inflater;
 
-    public ConcertAdapter(List<Concert> concertList, Context context, Clickable callBackActivity) {
+    private Notifiable callBackActivity;;
+
+    public ConcertAdapter(List<Concert> concertList, Notifiable callBackActivity) {
         this.concertList = concertList;
         this.callBackActivity = callBackActivity;
-        this.inflater = LayoutInflater.from(context);
+        this.inflater = LayoutInflater.from(callBackActivity.getContext());
     }
 
 
@@ -57,7 +61,10 @@ public class ConcertAdapter extends BaseAdapter {
         details.setText("Le " + concert.date + "\n" + concert.location);
         Picasso.get().load(concert.imageUrl).into(image);
 
-        layoutItem.setOnClickListener(v -> callBackActivity.onClicItem(position));
+        layoutItem.setOnClickListener( click -> {
+            Log.d(TAG, "clicked on item #"+position);
+            callBackActivity.onDataChange(2,position);
+        });
 
         return layoutItem;
     }
