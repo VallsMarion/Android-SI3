@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.CreationExtras;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.polytech.concertcare.R;
@@ -27,6 +28,7 @@ import edu.polytech.concertcare.interfaces.Notifiable;
 public class HomeFragment extends Fragment implements Clickable {
     private ConcertAdapter concertAdapter;
     private ListView listView;
+    private List<Concert> listConcerts = new ArrayList<>();
     private Notifiable notifiable;
 
     public HomeFragment() {
@@ -54,11 +56,15 @@ public class HomeFragment extends Fragment implements Clickable {
 
         listView = view.findViewById(R.id.listView);
         ConcertViewModel viewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
+
+        concertAdapter = new ConcertAdapter(listConcerts, notifiable);
+        listView.setAdapter(concertAdapter);
+
         viewModel.getConcerts().observe(getViewLifecycleOwner(), concerts -> {
             if (concerts != null) {
                 List<Concert> concertList = ConcertList.getConcerts();
-                concertAdapter = new ConcertAdapter(concertList, notifiable);
-                listView.setAdapter(concertAdapter);
+                listConcerts.clear();
+                listConcerts.addAll(concertList);
             }
         });
 
