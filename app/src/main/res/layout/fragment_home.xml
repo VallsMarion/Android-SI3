@@ -18,35 +18,20 @@
             android:id="@+id/bonjour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="15dp"
-            android:fontFamily="@font/lobster"
             android:text="@string/greeting"
-            android:textColor="@color/black"
-            android:textSize="45sp"
+            style="@style/title"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/profileIcon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="20dp"
-            android:src="@drawable/profile_icon"
-            app:layout_constraintLeft_toRightOf="@id/bonjour"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/appDescription"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            style="@style/subtitle"
             android:text="@string/assistance_text"
-            android:textColor="@color/grey"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/bonjour"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bonjour" />
 
         <LinearLayout
             android:id="@+id/concertHeaderRow"
