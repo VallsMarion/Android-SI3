@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,10 +21,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -32,6 +35,13 @@ import androidx.fragment.app.Fragment;
 
 import edu.polytech.concertcare.NotificationService;
 import edu.polytech.concertcare.R;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.polytech.concertcare.models.Concert;
+import edu.polytech.concertcare.viewmodels.ConcertViewModel;
 
 public class FoundItemFragment extends Fragment {
 
@@ -108,6 +118,66 @@ public class FoundItemFragment extends Fragment {
                 notificationService.sendSuccessNotificationWithImage();
             }
         });
+
+        //populate spinners
+        ConcertViewModel concertViewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
+        concertViewModel.getConcerts().observe(getViewLifecycleOwner(), concertList -> {
+            if (concertList != null) {
+                List<String> concertTitles = new ArrayList<>();
+                concertTitles.add(getString(R.string.select_concert_placeholder));
+                for (Concert concert : concertList) {
+                    concertTitles.add(concert.title);
+                }
+
+                ArrayAdapter<String> concertAdapter = new ArrayAdapter<String>(
+                        requireContext(),
+                        android.R.layout.simple_spinner_item,
+                        concertTitles
+                ) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        TextView view = (TextView) super.getView(position, convertView, parent);
+                        view.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                        return view;
+                    }
+
+                    @Override
+                    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                        TextView view = (TextView) super.getDropDownView(position, convertView, parent);
+                        view.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                        return view;
+                    }
+                };
+
+                concertAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                concertSpinner.setAdapter(concertAdapter);
+            }
+        });
+
+
+        String[] itemTypesArray = getResources().getStringArray(R.array.item_types);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                itemTypesArray
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView view = (TextView) super.getView(position, convertView, parent);
+                view.setTextColor(position == 0 ? Color.GRAY : Color.BLACK); //set hint color to gray
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                TextView view = (TextView) super.getDropDownView(position, convertView, parent);
+                view.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                return view;
+            }
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemTypeSpinner.setAdapter(adapter);
+
 
         return view;
     }
