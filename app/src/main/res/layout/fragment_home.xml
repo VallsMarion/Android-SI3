@@ -68,6 +68,8 @@
                 android:textSize="18sp"
                 android:layout_weight="0.4"/>
 
+
+
         <!-- TO DO Buttons container
         <LinearLayout
             android:layout_width="wrap_content"
@@ -118,11 +120,15 @@
             android:layout_height="0dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
+            android:paddingEnd="12dp"
             android:choiceMode="singleChoice"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:fadeScrollbars="false"
+            android:scrollbarStyle="insideInset"
             app:layout_constraintTop_toBottomOf="@id/concertHeaderRow"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
