@@ -59,6 +59,7 @@
     <string name="sujet_dem1">J\'ai trouvé un objet</string>
     <string name="sujet_dem2">J\'ai perdu un objet</string>
     <string name="sujet_dem3">J\'ai besoin d\'assistance</string>
+    <string name="select_concert_placeholder">Sélectionner un concert</string>
 
     <!-- lost page -->
     <string name="lost">Signaler un objet perdu</string>
@@ -69,6 +70,15 @@
     <string name="label_description">Décrivez l\'objet</string>
     <string name="choisir_photo">Photo de l\'objet</string>
     <string name="label_photo">Choisir ...</string>
+
+    <string-array name="item_types">
+        <item>Séléctionner un type</item>
+        <item>Téléphone</item>
+        <item>Clés</item>
+        <item>Portefeuille</item>
+        <item>Sac</item>
+        <item>Autre</item>
+    </string-array>
 
     <!-- Parametre -->
     <string name="parametre">Paramètres</string>

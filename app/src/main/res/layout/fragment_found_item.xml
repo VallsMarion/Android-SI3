@@ -38,9 +38,10 @@
             android:id="@+id/concertSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/border"
-            android:padding="8dp" />
+            android:layout_marginBottom="12dp"
+            android:padding="8dp"
+            android:popupBackground="@color/white"
+            android:background="@drawable/spinner_background"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,9 +55,11 @@
             android:id="@+id/itemTypeSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/border"
-            android:padding="8dp" />
+            android:layout_marginBottom="12dp"
+            android:padding="8dp"
+            android:popupBackground="@color/white"
+            android:background="@drawable/spinner_background" />
+
 
         <TextView
             android:layout_width="wrap_content"
