@@ -14,9 +14,13 @@ import androidx.lifecycle.viewmodel.CreationExtras;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import edu.polytech.concertcare.R;
 import edu.polytech.concertcare.interfaces.Clickable;
 import edu.polytech.concertcare.adapters.ConcertAdapter;
+import edu.polytech.concertcare.models.Concert;
+import edu.polytech.concertcare.viewmodels.ConcertList;
 import edu.polytech.concertcare.viewmodels.ConcertViewModel;
 import edu.polytech.concertcare.interfaces.Notifiable;
 
@@ -52,7 +56,8 @@ public class HomeFragment extends Fragment implements Clickable {
         ConcertViewModel viewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
         viewModel.getConcerts().observe(getViewLifecycleOwner(), concerts -> {
             if (concerts != null) {
-                concertAdapter = new ConcertAdapter(concerts, notifiable);
+                List<Concert> concertList = ConcertList.getConcerts();
+                concertAdapter = new ConcertAdapter(concertList, notifiable);
                 listView.setAdapter(concertAdapter);
             }
         });

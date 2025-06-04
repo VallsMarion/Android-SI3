@@ -20,6 +20,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
+import edu.polytech.concertcare.viewmodels.ConcertList;
 import edu.polytech.concertcare.viewmodels.ConcertViewModel;
 import edu.polytech.concertcare.interfaces.Notifiable;
 import edu.polytech.concertcare.R;
@@ -93,45 +96,12 @@ public class ConcertItemFragment extends Fragment {
         ConcertViewModel viewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
         viewModel.getConcerts().observe(getViewLifecycleOwner(), concerts -> {
             if (concerts != null) {
-                Concert concert = concerts.stream().filter(e-> e.id == idConcert).findFirst().orElse(null);
+                List<Concert> concertList = ConcertList.getConcerts();
+                Concert concert = concertList .stream().filter(e-> e.id == idConcert).findFirst().orElse(null);
                 if (concert != null) {
                     title.setText(concert.title);
                     date.setText("Date: " + concert.date);
                     location.setText("Location: " + concert.location);
-                    //the following is commented because we did not have time to finish implementation
-                    /* It extracts dominant colors for each concerts image and applies a gradient background to it
-                     */
-                /*Picasso.get()
-                        .load(concert.imageUrl)
-                        .into(new com.squareup.picasso.Target() {
-                            @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                image.setImageBitmap(bitmap); // still sets image
-
-                                // Extract dominant and dark vibrant colors
-                                Palette.from(bitmap).generate(palette -> {
-                                    int fallback = Color.parseColor("#FFA726"); // bright orange fallback
-
-                                    int lightVibrant = palette.getLightVibrantColor(fallback);
-                                    int darkVibrant = palette.getDarkVibrantColor(fallback);
-
-                                    // Add highlight to the top color (glossier look)
-                                    int glossyTop = lightenColor(lightVibrant, 0.3f);
-                                    int richBottom = darkenColor(darkVibrant, 0.2f);
-
-                                    applyGradientBackground(rootLayout, glossyTop, richBottom);
-                                });
-
-
-                            }
-
-                            @Override
-                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-                            }
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable) {}
-                        });*/
 
                     Picasso.get().load(concert.imageUrl).into(image);
                     //If we want to add button that redirects to staff map for the concert in question
