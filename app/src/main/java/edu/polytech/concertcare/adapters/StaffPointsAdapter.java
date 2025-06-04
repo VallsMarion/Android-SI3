@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.polytech.concertcare.concerts.StaffPoint;
+import edu.polytech.concertcare.R;
+import edu.polytech.concertcare.models.StaffPoint;
 
 public class StaffPointsAdapter extends RecyclerView.Adapter<StaffPointsAdapter.StaffPointViewHolder> {
 

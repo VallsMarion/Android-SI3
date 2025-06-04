@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.views;
 
 import static android.content.ContentValues.TAG;
 
@@ -29,6 +29,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import edu.polytech.concertcare.NotificationService;
+import edu.polytech.concertcare.R;
 
 public class FoundItemFragment extends Fragment {
 

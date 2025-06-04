@@ -1,4 +1,4 @@
-package edu.polytech.concertcare.concerts;
+package edu.polytech.concertcare.utils;
 
 import java.util.List;
 

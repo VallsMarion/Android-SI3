@@ -1,4 +1,4 @@
-package edu.polytech.concertcare.concerts;
+package edu.polytech.concertcare.adapters;
 
 import static android.content.ContentValues.TAG;
 
@@ -15,8 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-import edu.polytech.concertcare.Notifiable;
+import edu.polytech.concertcare.interfaces.Notifiable;
 import edu.polytech.concertcare.R;
+import edu.polytech.concertcare.models.Concert;
 
 public class ConcertAdapter extends BaseAdapter {
     private List<Concert> concertList;
@@ -62,8 +63,8 @@ public class ConcertAdapter extends BaseAdapter {
         Picasso.get().load(concert.imageUrl).into(image);
 
         layoutItem.setOnClickListener( click -> {
-            Log.d(TAG, "clicked on item #"+position);
-            callBackActivity.onDataChange(2,position);
+            Log.d(TAG, "clicked on item #"+position + " : " + concert.id);
+            callBackActivity.onDataChange(2, concert.id);
         });
 
         return layoutItem;

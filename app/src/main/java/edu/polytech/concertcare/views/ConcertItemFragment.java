@@ -1,4 +1,4 @@
-package edu.polytech.concertcare.concerts;
+package edu.polytech.concertcare.views;
 
 import android.content.Context;
 
@@ -15,12 +15,15 @@ import android.widget.TextView;
 
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 
 import com.squareup.picasso.Picasso;
 
-import edu.polytech.concertcare.Notifiable;
+import edu.polytech.concertcare.viewmodels.ConcertViewModel;
+import edu.polytech.concertcare.interfaces.Notifiable;
 import edu.polytech.concertcare.R;
+import edu.polytech.concertcare.models.Concert;
 
 
 /**
@@ -31,7 +34,7 @@ public class ConcertItemFragment extends Fragment {
     private final String TAG = "frallo " + getClass().getSimpleName();
     private Notifiable notifiable;
 
-    private Concert concert;
+    private String idConcert;
 
     public ConcertItemFragment() {
         // Required empty public constructor
@@ -54,8 +57,7 @@ public class ConcertItemFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            int index = getArguments().getInt("concert_index");
-             concert = ConcertList.getConcerts().get(index);
+            idConcert = getArguments().getString("concert_id");
         }
 
     }
@@ -88,18 +90,17 @@ public class ConcertItemFragment extends Fragment {
         ImageView image = layoutItem.findViewById(R.id.concertImage);
         View rootLayout = layoutItem.findViewById(R.id.topGradientContainer);
 
-        // Get concert index from arguments
-        if (getArguments() != null) {
-            int index = getArguments().getInt("concert_index", -1);
-            if (index != -1 && index < ConcertList.getConcerts().size()) {
-                Concert concert = ConcertList.getConcerts().get(index);
-
-                title.setText(concert.title);
-                date.setText("Date: " + concert.date);
-                location.setText("Location: " + concert.location);
-                //the following is commented because we did not have time to finish implementation
-                /* It extracts dominant colors for each concerts image and applies a gradient background to it
-                 */
+        ConcertViewModel viewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
+        viewModel.getConcerts().observe(getViewLifecycleOwner(), concerts -> {
+            if (concerts != null) {
+                Concert concert = concerts.stream().filter(e-> e.id == idConcert).findFirst().orElse(null);
+                if (concert != null) {
+                    title.setText(concert.title);
+                    date.setText("Date: " + concert.date);
+                    location.setText("Location: " + concert.location);
+                    //the following is commented because we did not have time to finish implementation
+                    /* It extracts dominant colors for each concerts image and applies a gradient background to it
+                     */
                 /*Picasso.get()
                         .load(concert.imageUrl)
                         .into(new com.squareup.picasso.Target() {
@@ -132,8 +133,8 @@ public class ConcertItemFragment extends Fragment {
                             public void onPrepareLoad(Drawable placeHolderDrawable) {}
                         });*/
 
-                Picasso.get().load(concert.imageUrl).into(image);
-                //If we want to add button that redirects to staff map for the concert in question
+                    Picasso.get().load(concert.imageUrl).into(image);
+                    //If we want to add button that redirects to staff map for the concert in question
                 /*Button showOnMap = layoutItem.findViewById(R.id.btnShowOnMap);
                 showOnMap.setOnClickListener(v -> {
                     if (getArguments() != null) {
@@ -146,8 +147,11 @@ public class ConcertItemFragment extends Fragment {
                         }
                     }
                 });*/
+                } else {
+                    Log.e(TAG, "Concert with id " + idConcert + " not found.");
+                }
             }
-        }
+        });
 
         return layoutItem;
     }

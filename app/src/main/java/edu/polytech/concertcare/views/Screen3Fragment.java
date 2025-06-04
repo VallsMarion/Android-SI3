@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.polytech.concertcare.R;
+import edu.polytech.concertcare.adapters.RequestAdapter;
+import edu.polytech.concertcare.models.Request;
 
 public class Screen3Fragment extends Fragment {
 

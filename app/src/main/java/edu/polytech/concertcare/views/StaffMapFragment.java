@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.views;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -32,7 +32,9 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import android.Manifest;
 
-import edu.polytech.concertcare.concerts.StaffPoint;
+import edu.polytech.concertcare.R;
+import edu.polytech.concertcare.adapters.StaffPointsAdapter;
+import edu.polytech.concertcare.models.StaffPoint;
 
 
 public class StaffMapFragment extends Fragment {

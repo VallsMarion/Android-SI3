@@ -6,19 +6,27 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
-import edu.polytech.concertcare.concerts.Concert;
-import edu.polytech.concertcare.concerts.ConcertItemFragment;
-import edu.polytech.concertcare.concerts.ConcertList;
-import edu.polytech.concertcare.concerts.HttpAsyncGet;
-import edu.polytech.concertcare.concerts.PostExecuteActivity;
+import edu.polytech.concertcare.models.Concert;
+import edu.polytech.concertcare.views.ConcertItemFragment;
+import edu.polytech.concertcare.viewmodels.ConcertViewModel;
+import edu.polytech.concertcare.interfaces.Menuable;
+import edu.polytech.concertcare.interfaces.Notifiable;
+import edu.polytech.concertcare.utils.HttpAsyncGet;
+import edu.polytech.concertcare.utils.PostExecuteActivity;
+import edu.polytech.concertcare.views.FoundItemFragment;
+import edu.polytech.concertcare.views.HomeFragment;
+import edu.polytech.concertcare.views.MenuFragment;
+import edu.polytech.concertcare.views.Screen3Fragment;
+import edu.polytech.concertcare.views.Screen4Fragment;
+import edu.polytech.concertcare.views.StaffMapFragment;
 
 
 public class ControlActivity extends AppCompatActivity implements Menuable, Notifiable, PostExecuteActivity<Concert> {
@@ -81,11 +89,11 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
     @Override
     public void onDataChange(int numFragment, Object data) {
         if (numFragment == 2) { // concert click
-            int index = (Integer) data;
+            String id = (String) data;
 
             Fragment fragment = new ConcertItemFragment();
             Bundle args = new Bundle();
-            args.putInt("concert_index", index); // just send the index
+            args.putString("concert_id", id); // just send the index
 
             fragment.setArguments(args);
 
@@ -138,7 +146,8 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
 
     @Override
     public void onPostExecute(List<Concert> itemList) {
-        ConcertList.addAllConcerts(itemList);
+        ConcertViewModel vm = new ViewModelProvider(this).get(ConcertViewModel.class);
+        vm.setConcerts(itemList);
         onMenuChange(0); // TODO ajouter des constantes pour les index pour mieux comprendre le switch
     }
 }

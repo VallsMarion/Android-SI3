@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.interfaces;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package edu.polytech.concertcare.concerts;
+package edu.polytech.concertcare.models;
 
 public class StaffPoint {
     private String name;

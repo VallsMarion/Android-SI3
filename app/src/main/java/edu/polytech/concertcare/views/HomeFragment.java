@@ -1,4 +1,4 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.views;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,21 +8,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.CreationExtras;
 
 import android.widget.ListView;
-import android.util.Log;
 import android.widget.Toast;
 
-import java.util.List;
-
-import edu.polytech.concertcare.concerts.Clickable;
-import edu.polytech.concertcare.concerts.Concert;
-import edu.polytech.concertcare.concerts.ConcertAdapter;
-import edu.polytech.concertcare.concerts.ConcertList;
+import edu.polytech.concertcare.R;
+import edu.polytech.concertcare.interfaces.Clickable;
+import edu.polytech.concertcare.adapters.ConcertAdapter;
+import edu.polytech.concertcare.viewmodels.ConcertViewModel;
+import edu.polytech.concertcare.interfaces.Notifiable;
 
 public class HomeFragment extends Fragment implements Clickable {
-    private List<Concert> concertList;
     private ConcertAdapter concertAdapter;
     private ListView listView;
     private Notifiable notifiable;
@@ -34,7 +32,6 @@ public class HomeFragment extends Fragment implements Clickable {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        concertList = ConcertList.getConcerts();
     }
 
     @Override
@@ -52,8 +49,13 @@ public class HomeFragment extends Fragment implements Clickable {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         listView = view.findViewById(R.id.listView);
-        concertAdapter = new ConcertAdapter(concertList, notifiable);
-        listView.setAdapter(concertAdapter);
+        ConcertViewModel viewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
+        viewModel.getConcerts().observe(getViewLifecycleOwner(), concerts -> {
+            if (concerts != null) {
+                concertAdapter = new ConcertAdapter(concerts, notifiable);
+                listView.setAdapter(concertAdapter);
+            }
+        });
 
         return view;
     }
@@ -61,7 +63,7 @@ public class HomeFragment extends Fragment implements Clickable {
 
     @Override
     public void onClicItem(int itemIndex) {
-        Toast.makeText(getContext(), "Clicked: " + concertList.get(itemIndex).title, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Clicked: " + itemIndex, Toast.LENGTH_SHORT).show();
     }
 
     @NonNull

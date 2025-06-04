@@ -1,6 +1,5 @@
-package edu.polytech.concertcare;
+package edu.polytech.concertcare.views;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+
+import edu.polytech.concertcare.R;
 
 public class Screen4Fragment extends Fragment {
 

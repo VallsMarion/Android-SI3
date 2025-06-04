@@ -1,8 +1,9 @@
-package edu.polytech.concertcare.concerts;
+package edu.polytech.concertcare.models;
 
 import java.util.List;
 
 public class Concert {
+    public String id;
     public String title;
     public String date;
     public String location;
@@ -12,8 +13,9 @@ public class Concert {
 
     public Concert() {}
 
-    public Concert(String title, String date, String location, String imageUrl,
+    public Concert(String id, String title, String date, String location, String imageUrl,
                    List<StaffPoint> staffPoints) {
+        this.id = id;
         this.title = title;
         this.date = date;
         this.location = location;
