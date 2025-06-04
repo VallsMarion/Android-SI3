@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     tools:context=".views.StaffMapFragment">
 
@@ -27,16 +28,18 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <ImageButton
+        <Button
             android:id="@+id/addRequestButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add"
-            android:layout_gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:contentDescription="Ajouter une demande"
+            android:backgroundTint="@android:color/black"
+            app:cornerRadius="16dp"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:text="Nouvelle demande"
+            />
     </LinearLayout>
 
 </FrameLayout>

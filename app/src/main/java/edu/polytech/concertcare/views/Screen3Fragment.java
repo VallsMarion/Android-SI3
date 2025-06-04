@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,7 @@ import edu.polytech.concertcare.models.Request;
 
 public class Screen3Fragment extends Fragment {
 
-    private ImageButton addRequestButton;
+    private Button addRequestButton;
     private RecyclerView recyclerView;
     private RequestAdapter requestAdapter;
     private List<Request> requestList;
