@@ -125,11 +125,11 @@ public class FoundItemFragment extends Fragment {
             if (concertList != null) {
                 List<String> concertTitles = new ArrayList<>();
                 concertTitles.add(getString(R.string.select_concert_placeholder));
-                for (Concert concert : concertList) {
+                for (Concert concert : concertList.getConcerts()) {
                     concertTitles.add(concert.title);
                 }
 
-                ArrayAdapter<String> concertAdapter = new ArrayAdapter<String>(
+                ArrayAdapter<String> concertAdapter = new ArrayAdapter<>(
                         requireContext(),
                         android.R.layout.simple_spinner_item,
                         concertTitles
