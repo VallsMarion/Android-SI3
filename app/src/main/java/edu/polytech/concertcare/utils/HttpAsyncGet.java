@@ -49,6 +49,7 @@ public class HttpAsyncGet<T>{
         String jsonStr = webService.makeServiceCall(urlAddress);
         ObjectMapper mapper = new ObjectMapper();
         try {
+            Log.d(TAG, "jsonStr: " + jsonStr);
             //todo:  itemList = mapper.readValue(jsonStr, new TypeReference<List<T>>(){});   was not possible
             //       the previous line provided List<Object> instead of List<T>
             //       because "l'argument List<T> dans new TypeReference<List<T>>(){} est un type générique non résolu".

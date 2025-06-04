@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.CreationExtras;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,7 +29,7 @@ import edu.polytech.concertcare.interfaces.Notifiable;
 
 public class HomeFragment extends Fragment implements Clickable {
     private ConcertAdapter concertAdapter;
-    private ListView listView;
+    private RecyclerView listView;
     private List<Concert> listConcerts = new ArrayList<>();
     private Notifiable notifiable;
 
@@ -55,6 +57,7 @@ public class HomeFragment extends Fragment implements Clickable {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         listView = view.findViewById(R.id.listView);
+        listView.setLayoutManager(new LinearLayoutManager(getContext()));
         ConcertViewModel viewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
 
         concertAdapter = new ConcertAdapter(listConcerts, notifiable);
