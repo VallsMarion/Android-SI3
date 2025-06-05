@@ -73,6 +73,11 @@ public class ConcertAdapter extends RecyclerView.Adapter<ConcertAdapter.ConcertV
             Log.d(TAG, "clicked on item #"+position + " : " + concert.id);
             callBackActivity.onDataChange(2, concert.id);
         });
+
+        requests.setOnClickListener(click -> {
+            Log.d(TAG, "clicked on requests button for item #"+position + " : " + concert.id);
+            callBackActivity.onDataChange(23, concert.id);
+        });
     }
 
     @Override

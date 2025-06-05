@@ -21,25 +21,34 @@ import org.osmdroid.views.MapView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import android.Manifest;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import edu.polytech.concertcare.R;
 import edu.polytech.concertcare.adapters.StaffPointsAdapter;
+import edu.polytech.concertcare.models.Concert;
 import edu.polytech.concertcare.models.StaffPoint;
+import edu.polytech.concertcare.viewmodels.ConcertList;
+import edu.polytech.concertcare.viewmodels.ConcertViewModel;
 
 
 public class StaffMapFragment extends Fragment {
 
-    private MapView map;
     private RecyclerView staffPointsRecyclerView;
     private StaffPointsAdapter staffPointsAdapter;
     private List<StaffPoint> staffPointsList = new ArrayList<>();
@@ -48,8 +57,7 @@ public class StaffMapFragment extends Fragment {
 
     private MapView mapView;
     private MyLocationNewOverlay locationOverlay;
-
-
+    private Spinner spinner;
 
 
     @Override
@@ -87,6 +95,8 @@ public class StaffMapFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_staffmap, container, false);
 
         mapView = rootView.findViewById(R.id.map);
+        spinner = rootView.findViewById(R.id.staffFilterSpinner);
+
 
         Configuration.getInstance().setOsmdroidBasePath(new File(requireContext().getCacheDir(), "osmdroid"));
         Configuration.getInstance().setOsmdroidTileCache(new File(requireContext().getCacheDir(), "osmdroid/tiles"));
@@ -105,16 +115,17 @@ public class StaffMapFragment extends Fragment {
         }
         locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), mapView);
         locationOverlay.enableMyLocation();
-        locationOverlay.enableFollowLocation();
+        //locationOverlay.enableFollowLocation();
         mapView.getOverlays().add(locationOverlay);
+
 
         locationOverlay.runOnFirstFix(() -> {
             GeoPoint myLocation = locationOverlay.getMyLocation();
             Log.d("DEBUG", "GPS Fix received: " + myLocation);
             if (myLocation != null) {
                 requireActivity().runOnUiThread(() -> {
-                    mapView.getController().setZoom(18.0);
-                    mapView.getController().animateTo(myLocation);
+                    //mapView.getController().setZoom(18.0);
+                    //mapView.getController().animateTo(myLocation);
                 });
             }
         });
@@ -126,7 +137,52 @@ public class StaffMapFragment extends Fragment {
         staffPointsAdapter = new StaffPointsAdapter(staffPointsList);
         staffPointsRecyclerView.setAdapter(staffPointsAdapter);
 
+        ConcertViewModel viewModel = new ViewModelProvider(requireActivity()).get(ConcertViewModel.class);
+        viewModel.getConcerts().observe(getViewLifecycleOwner(), concerts -> {
+            if (concerts != null) {
+                List<Concert> concertList = ConcertList.getConcerts();
+                String[] concertTitles = concertList.stream()
+                        .map(concert -> concert.title)
+                        .toArray(String[]::new);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        getContext(),
+                        android.R.layout.simple_spinner_item,
+                        concertTitles
+                );
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
 
+// Gérer les changements de sélection
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Concert concert = ConcertList.getConcerts().get(position);
+                        Log.d("StaffMapFragment", "Selected concert: " + concert.title + " with ID: " + concert.id);
+                        staffPointsList.clear();
+                        clearMarkers();
+                        if (concert.staffPoints != null) {
+                            staffPointsList.addAll(concert.staffPoints);
+                            for (StaffPoint point : concert.staffPoints) {
+                                GeoPoint geoPoint = new GeoPoint(point.getLatitude(), point.getLongitude());
+                                addMarker(geoPoint, point.getName(), point.getName());
+                            }
+
+                            if(!staffPointsList.isEmpty()) {
+                                GeoPoint myLocation = new GeoPoint(staffPointsList.get(0).getLatitude(), staffPointsList.get(0).getLongitude());
+                                requireActivity().runOnUiThread(() -> {
+                                    mapView.getController().setZoom(18.0);
+                                    mapView.getController().animateTo(myLocation);
+                                });
+                            }
+                        }
+                        staffPointsAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {}
+                });
+            }
+        });
 
 
         return rootView;
@@ -155,7 +211,7 @@ public class StaffMapFragment extends Fragment {
 
         locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), mapView);
         locationOverlay.enableMyLocation();
-        locationOverlay.enableFollowLocation();
+        //locationOverlay.enableFollowLocation();
         mapView.getOverlays().add(locationOverlay);
 
         locationOverlay.runOnFirstFix(() -> {
@@ -163,8 +219,8 @@ public class StaffMapFragment extends Fragment {
             Log.d("DEBUG", "Location fix: " + myLocation);
             if (myLocation != null) {
                 requireActivity().runOnUiThread(() -> {
-                    mapView.getController().setZoom(18.0);
-                    mapView.getController().animateTo(myLocation);
+                    //mapView.getController().setZoom(18.0);
+                    //mapView.getController().animateTo(myLocation);
                 });
             }
         });
@@ -204,5 +260,30 @@ public class StaffMapFragment extends Fragment {
             mapView.getController().setCenter(nicePoint);
         }
     }
+
+    private void addMarker(GeoPoint point, String title, String description) {
+        Marker marker = new Marker(mapView);
+        marker.setPosition(point);
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setTitle(title);
+        marker.setSubDescription(description);
+        marker.setPanToView(true);
+        mapView.getOverlays().add(marker);
+        mapView.invalidate(); // Redessine la carte
+    }
+
+    private void clearMarkers() {
+        List<Overlay> toRemove = new ArrayList<>();
+
+        for (Overlay overlay : mapView.getOverlays()) {
+            if (overlay instanceof Marker) {
+                toRemove.add(overlay);
+            }
+        }
+
+        mapView.getOverlays().removeAll(toRemove);
+        mapView.invalidate(); // Redessine la carte
+    }
+
 
 }

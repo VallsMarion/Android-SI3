@@ -88,6 +88,14 @@ public class ControlActivity extends AppCompatActivity implements Menuable, Noti
 
     @Override
     public void onDataChange(int numFragment, Object data) {
+        if(numFragment == 23) {
+            // Screen3Fragment
+            Fragment fragment =new Screen3Fragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_main, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
         if (numFragment == 2) { // concert click
             String id = (String) data;
 
