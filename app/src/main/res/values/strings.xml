@@ -80,6 +80,13 @@
         <item>Autre</item>
     </string-array>
 
+    <string-array name="request_types">
+        <item>Séléctionner un type</item>
+        <item>Assistance PMR</item>
+        <item>Casque spécial enfant</item>
+        <item>Autre</item>
+    </string-array>
+
     <!-- Parametre -->
     <string name="parametre">Paramètres</string>
     <string name="langue">Langue</string>

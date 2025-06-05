@@ -1,31 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".views.StaffMapFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Titre -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/demandes"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Texte vide -->
+    <TextView
+        android:id="@+id/noRequestText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aucune demande pour le moment"
+        android:textColor="#888888"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Liste avec poids pour occuper tout l’espace disponible -->
+    <ListView
+        android:id="@+id/requestListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/demandes"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginBottom="20dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/requestList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+    <!-- Nouveau LinearLayout pour fixer le bouton en bas -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="8dp">
 
         <ImageButton
             android:id="@+id/addRequestButton"
@@ -39,4 +56,4 @@
             android:layout_marginBottom="16dp"/>
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

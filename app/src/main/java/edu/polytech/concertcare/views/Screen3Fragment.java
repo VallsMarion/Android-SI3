@@ -4,10 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,9 +21,11 @@ import java.util.List;
 
 import edu.polytech.concertcare.R;
 import edu.polytech.concertcare.adapters.RequestAdapter;
+import edu.polytech.concertcare.interfaces.Clickable;
 import edu.polytech.concertcare.models.Request;
+import edu.polytech.concertcare.viewmodels.RequestViewModel;
 
-public class Screen3Fragment extends Fragment {
+public class Screen3Fragment extends Fragment implements Clickable {
 
     private ImageButton addRequestButton;
     private RecyclerView recyclerView;
@@ -32,16 +39,16 @@ public class Screen3Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_screen3, container, false);
 
-        recyclerView = view.findViewById(R.id.requestList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // Utilisation d'un LayoutManager
+        ListView listView = view.findViewById(R.id.requestListView);
 
-        requestList = new ArrayList<>();
-        requestList.add(new Request("Demande 1", "Description de la demande 1"));
-        requestList.add(new Request("Demande 2", "Description de la demande 2"));
-        requestList.add(new Request("Demande 3", "Description de la demande 3"));
+        RequestViewModel requestViewModel = new ViewModelProvider(requireActivity()).get(RequestViewModel.class);
+        requestViewModel.getRequests().observe(getViewLifecycleOwner(), requestList -> {
+            if (requestList != null) {
+                RequestAdapter adapter = new RequestAdapter(requireContext(), requestList.getRequests());
+                listView.setAdapter(adapter);
+            }
+        });
 
-        requestAdapter = new RequestAdapter(requestList);
-        recyclerView.setAdapter(requestAdapter);
 
         addRequestButton = view.findViewById(R.id.addRequestButton);
         addRequestButton.setOnClickListener(v -> {
@@ -52,6 +59,24 @@ public class Screen3Fragment extends Fragment {
             transaction.commit();
         });
 
+        TextView noRequestText = view.findViewById(R.id.noRequestText);
+        requestViewModel.getRequests().observe(getViewLifecycleOwner(), requestList -> {
+            if (requestList != null && !requestList.getRequests().isEmpty()) {
+                RequestAdapter adapter = new RequestAdapter(requireContext(), requestList.getRequests());
+                listView.setAdapter(adapter);
+                noRequestText.setVisibility(View.GONE);
+            } else {
+                listView.setAdapter(null);
+                noRequestText.setVisibility(View.VISIBLE);
+            }
+        });
+
+
         return view;
+    }
+
+    @Override
+    public void onClicItem(int itemIndex) {
+        Toast.makeText(getContext(), "Clicked: " + itemIndex, Toast.LENGTH_SHORT).show();
     }
 }

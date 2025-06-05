@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -35,13 +36,18 @@ import androidx.fragment.app.Fragment;
 
 import edu.polytech.concertcare.NotificationService;
 import edu.polytech.concertcare.R;
+
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.polytech.concertcare.models.Concert;
+import edu.polytech.concertcare.models.Request;
 import edu.polytech.concertcare.viewmodels.ConcertViewModel;
+import edu.polytech.concertcare.viewmodels.RequestList;
+import edu.polytech.concertcare.viewmodels.RequestViewModel;
 
 public class FoundItemFragment extends Fragment {
 
@@ -102,6 +108,7 @@ public class FoundItemFragment extends Fragment {
         phoneNumber = view.findViewById(R.id.phoneNumber);
         selectImageButton = view.findViewById(R.id.selectImageButton);
         sendButton = view.findViewById(R.id.sendButton);
+        RequestViewModel viewModel = new ViewModelProvider(requireActivity()).get(RequestViewModel.class);
 
         selectImageButton.setOnClickListener( click -> {
             if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
@@ -114,8 +121,35 @@ public class FoundItemFragment extends Fragment {
             }
         });
         sendButton.setOnClickListener(v -> {
-            if (notificationService != null) {
-                notificationService.sendSuccessNotificationWithImage();
+            String description = itemDescription.getText().toString().trim();
+            String phone = phoneNumber.getText().toString().trim();
+            String concertTitle = concertSpinner.getSelectedItem().toString();
+            String itemType = itemTypeSpinner.getSelectedItem().toString();
+
+            if (!description.isEmpty() && !phone.isEmpty() &&
+                    concertSpinner.getSelectedItemPosition() != 0 &&
+                    itemTypeSpinner.getSelectedItemPosition() != 0) {
+
+                Request request = new Request(concertTitle, itemType, description, phone);
+
+                //RequestList.addRequest(request); // singleton
+                viewModel.addrequest(request); //notify view model
+                //viewModel.setRequests(RequestList.getRequests()); // notify view
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_main, new Screen3Fragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                itemDescription.setText("");
+                phoneNumber.setText("");
+                concertSpinner.setSelection(0);
+                itemTypeSpinner.setSelection(0);
+
+                if (notificationService != null) {
+                    notificationService.sendSuccessNotificationWithImage();
+                }
+
+            } else {
+                Toast.makeText(getContext(), "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
             }
         });
 
