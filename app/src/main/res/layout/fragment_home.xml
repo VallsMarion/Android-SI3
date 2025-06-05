@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:scrollbarStyle="insideInset"
+    android:fadeScrollbars="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.HomeFragment">
 
@@ -16,35 +18,30 @@
             android:id="@+id/bonjour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="15dp"
-            android:fontFamily="@font/lobster"
             android:text="@string/greeting"
-            android:textColor="@color/black"
-            android:textSize="45sp"
+            style="@style/title"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/profileIcon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="20dp"
-            android:src="@drawable/profile_icon"
-            app:layout_constraintLeft_toRightOf="@id/bonjour"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/appDescription"
-            android:layout_width="250dp"
+            style="@style/subtitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:text="@string/assistance_text"
-            android:textColor="@color/grey"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/bonjour"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bonjour" />
+
+        <ImageView
+            android:id="@+id/music_homepage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/musique"
+            app:layout_constraintBottom_toTopOf="@+id/appDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="20dp"
+            tools:src="@tools:sample/avatars" />
 
         <LinearLayout
             android:id="@+id/concertHeaderRow"
@@ -52,7 +49,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/appDescription"
@@ -118,7 +115,7 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:paddingEnd="12dp"
             android:choiceMode="singleChoice"

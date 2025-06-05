@@ -27,7 +27,7 @@ import edu.polytech.concertcare.viewmodels.RequestViewModel;
 
 public class Screen3Fragment extends Fragment implements Clickable {
 
-    private ImageButton addRequestButton;
+    private Button addRequestButton;
     private RecyclerView recyclerView;
     private RequestAdapter requestAdapter;
     private List<Request> requestList;

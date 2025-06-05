@@ -6,7 +6,7 @@
     <string name="content">awsome team</string>
     <string name="index">index</string>
     <string name="seekbarvalue">seekBarValue</string>
-    <string name="greeting">Bonjour, %1$s</string>
+    <string name="greeting">Bonjour [prénom]</string>
     <string name="button1_main">Voir tout</string>
     <string name="mes_concerts">Mes concerts</string>
     <string name="assistance_text">Objet perdu ou trouvé ? Besoin d’assistance ? Localiser un point de service ?</string>

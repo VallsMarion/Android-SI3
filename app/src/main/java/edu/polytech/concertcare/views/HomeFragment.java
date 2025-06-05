@@ -13,6 +13,9 @@ import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -70,6 +73,10 @@ public class HomeFragment extends Fragment implements Clickable {
                 listConcerts.addAll(concertList);
             }
         });
+
+        ImageView image = view.findViewById(R.id.music_homepage);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.musique);
+        image.startAnimation(animation);
 
         return view;
     }
