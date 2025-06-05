@@ -12,7 +12,7 @@ import edu.polytech.concertcare.models.Concert;
  * TODO : Actuellement, pour travailler correctement avec le singleton, il faudrait implémenter un
  * observable/observer pattern pour que les fragments puissent être notifiés des changements.
  * Par manque de temps, nous avons décidé de ne pas le faire et lorsque nous faisons un POST, nous
- * ajoutons la liste des concerts à la main dans le singleton. (A expliquer à l'oral)
+ * ajoutons la liste des concerts à la main dans le singleton.
  */
 public class ConcertList {
     private static List<Concert> concerts;

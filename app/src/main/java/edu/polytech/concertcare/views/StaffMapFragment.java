@@ -124,8 +124,8 @@ public class StaffMapFragment extends Fragment {
             Log.d("DEBUG", "GPS Fix received: " + myLocation);
             if (myLocation != null) {
                 requireActivity().runOnUiThread(() -> {
-                    //mapView.getController().setZoom(18.0);
-                    //mapView.getController().animateTo(myLocation);
+                    mapView.getController().setZoom(18.0);
+                    mapView.getController().animateTo(myLocation);
                 });
             }
         });
